@@ -21,19 +21,25 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
     private Long boardId;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
     @Column(nullable = false)
     private String title;
+
     private String content;
+
     @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
+
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-    @OneToMany(mappedBy = "board")
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments;
 
 }
