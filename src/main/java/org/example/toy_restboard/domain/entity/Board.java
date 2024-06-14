@@ -1,23 +1,16 @@
-package org.example.toy_restboard.domain;
+package org.example.toy_restboard.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Table(name = "boards")
 @Entity
 @Getter
 @Setter
-public class Board extends BaseEntity{
+public class Board extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")

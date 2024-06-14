@@ -1,4 +1,4 @@
-package org.example.toy_restboard.domain;
+package org.example.toy_restboard.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

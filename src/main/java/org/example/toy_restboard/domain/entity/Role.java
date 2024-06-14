@@ -1,4 +1,4 @@
-package org.example.toy_restboard.domain;
+package org.example.toy_restboard.domain.entity;
 
 import lombok.Getter;
 
