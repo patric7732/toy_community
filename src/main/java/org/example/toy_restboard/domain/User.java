@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Table(name = "users")
@@ -16,7 +18,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
-public class User {
+public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,10 +27,6 @@ public class User {
     private String userId;
 
     private String password;
-
-    @Column(name = "reg_data")
-    @CreationTimestamp
-    private LocalDateTime regData;
 
     @Column(unique = true)
     private String email;
@@ -40,5 +38,5 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Board> boards;
+    private List<Board> boards;
 }

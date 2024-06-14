@@ -4,11 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum Role {
-    ADMIN(1), MEMBER(2);
-    private final Integer level;
+    ADMIN("관리자"), MEMBER("멤버");
+    String Description;
 
-    Role(Integer level) {
-        this.level = level;
+    Role(String description) {
+        Description = description;
     }
-
 }
