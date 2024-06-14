@@ -1,14 +1,12 @@
-package org.example.toy_restboard.domain;
+package org.example.toy_restboard.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Table(name = "users")
 @Entity
@@ -16,7 +14,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,10 +23,6 @@ public class User {
     private String userId;
 
     private String password;
-
-    @Column(name = "reg_data")
-    @CreationTimestamp
-    private LocalDateTime regData;
 
     @Column(unique = true)
     private String email;
@@ -40,5 +34,5 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Board> boards;
+    private List<Board> boards;
 }
