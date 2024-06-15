@@ -19,8 +19,8 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", unique = true)
-    private String userId;
+    @Column(name = "login_Id", unique = true)
+    private String loginId;
 
     private String password;
 
@@ -30,7 +30,7 @@ public class User extends BaseEntity {
     private String name;
 
     private Integer birth;
-
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
