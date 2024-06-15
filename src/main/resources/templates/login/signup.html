@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+
+<div class="signup-container">
+    <h1>회원가입</h1>
+    <form th:action method="post" th:object="${user}">
+        <div th:replace="~{/layout/error :: fielderror}"></div>
+        <div>
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" th:field="*{name}">
+            <div th:erros="*{name}" class="error"></div>
+        </div>
+        <div>
+            <label for="loginId">아이디</label>
+            <input type="text" id="loginId" name="name" th:field="*{loginId}">
+            <div th:erros="*{loginId}" class="error"></div>
+        </div>
+        <div>
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" th:field="*{password}">
+            <div th:erros="*{password}" class="error"></div>
+        </div>
+        <div>
+            <label for="email">이메일</label>
+            <input type="text" id="email" name="email" th:field="*{email}">
+            <div th:erros="*{email}" class="error"></div>
+        </div>
+        <div>
+            <label for="birth">생년월일</label>
+            <input type="text" id="birth" name="birth" th:field="*{birth}" placeholder="7자로 적어주세요">
+            <div th:erros="*{birth}" class="error"></div>
+        </div>
+            <div>권한</div>
+            <select class="form-select" th:field="*{role}">
+                <option value="">==권한 선택==</option>
+                <option th:each="role :${roles}" th:value="${role.name()}"
+                        th:text="${role.description}"></option>
+            </select>
+        </div>
+
+
+        <input type="submit" value="회원가입">
+    </form>
+</div>
+
+</body>
+</html>
