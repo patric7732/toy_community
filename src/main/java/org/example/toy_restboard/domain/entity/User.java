@@ -1,19 +1,17 @@
 package org.example.toy_restboard.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.example.toy_restboard.domain.service.dto.UserJoinDto;
 
 import java.util.List;
 
 @Table(name = "users")
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
+@Builder
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +33,16 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boards;
+
+
+    public static User toEntity(UserJoinDto joinDto) {
+        return User.builder()
+                .loginId(joinDto.getLoginId())
+                .password(joinDto.getPassword())
+                .email(joinDto.getEmail())
+                .name(joinDto.getName())
+                .birth(joinDto.getBirth())
+                .role(joinDto.getRole())
+                .build();
+    }
 }
