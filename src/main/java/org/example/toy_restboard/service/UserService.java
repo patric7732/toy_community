@@ -1,9 +1,9 @@
-package org.example.toy_restboard.domain.service;
+package org.example.toy_restboard.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.toy_restboard.domain.entity.User;
-import org.example.toy_restboard.domain.repository.UserRepository;
-import org.example.toy_restboard.domain.service.dto.UserJoinDto;
+import org.example.toy_restboard.repository.UserRepository;
+import org.example.toy_restboard.domain.dto.userdto.UserJoinDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package org.example.toy_restboard.domain.service.dto;
+package org.example.toy_restboard.domain.dto.userdto;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
