@@ -27,7 +27,6 @@ public class BoardService {
     @Transactional
     public void createBoard(BoardCreateDto boardCreateDto, AccountContext accountContext) {
         User user = userRepository.findByLoginId(accountContext.getUsername()).orElseThrow();
-
         Board board = new Board();
         board.setUser(user);
         board.setTitle(boardCreateDto.getTitle());
@@ -38,8 +37,10 @@ public class BoardService {
     @Transactional
     public void updateBoard(Long boardId, BoardUpdateDto boardUpdateDto, AccountContext accountContext) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
+        User user = userRepository.findByLoginId(accountContext.getUsername()).orElseThrow();
+
         Board board = optionalBoard.orElse(null);
-        if (!board.getUser().getLoginId().equals(accountContext.getUsername())) {
+        if (!board.getUser().getLoginId().equals(user.getLoginId())) {
             throw new RuntimeException("게시글을 수정할 권한이 없습니다.");
         }
         board.setTitle(boardUpdateDto.getTitle());
@@ -63,9 +64,10 @@ public class BoardService {
 
     @Transactional
     public void deleteBoard(Long boardId, @AuthenticationPrincipal AccountContext accountContext) {
+        User user = userRepository.findByLoginId(accountContext.getUsername()).orElseThrow();
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.get();
-        if (!board.getUser().getLoginId().equals(accountContext.getUsername())) {
+        if (!board.getUser().getLoginId().equals(user.getLoginId())) {
             throw new RuntimeException("게시글을 삭제할 권한이 없습니다.");
         }
         boardRepository.delete(board);
