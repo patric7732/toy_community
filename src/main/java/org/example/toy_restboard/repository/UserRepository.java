@@ -1,4 +1,4 @@
-package org.example.toy_restboard.domain.repository;
+package org.example.toy_restboard.repository;
 
 import org.example.toy_restboard.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

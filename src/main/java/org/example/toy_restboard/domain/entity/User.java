@@ -2,7 +2,7 @@ package org.example.toy_restboard.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.toy_restboard.domain.service.dto.UserJoinDto;
+import org.example.toy_restboard.domain.dto.userdto.UserJoinDto;
 
 import java.util.List;
 

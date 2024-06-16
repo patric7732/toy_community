@@ -2,9 +2,9 @@ package org.example.toy_restboard.common.security.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.toy_restboard.domain.entity.User;
-import org.example.toy_restboard.domain.repository.UserRepository;
-import org.example.toy_restboard.domain.service.dto.AccountContext;
-import org.example.toy_restboard.domain.service.dto.AccountDto;
+import org.example.toy_restboard.repository.UserRepository;
+import org.example.toy_restboard.domain.dto.userdto.AccountContext;
+import org.example.toy_restboard.domain.dto.userdto.AccountDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
