@@ -9,6 +9,8 @@ import org.example.toy_restboard.domain.entity.User;
 import org.example.toy_restboard.repository.BoardRepository;
 import org.example.toy_restboard.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,6 +21,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public void createBoard(BoardCreateDto boardCreateDto) {
         User user = userRepository.findByLoginId(boardCreateDto.getUserId());
         Board board = new Board();
@@ -28,6 +31,7 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    @Transactional
     public void updateBoard(Long boardId, BoardUpdateDto boardUpdateDto) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElse(null);
@@ -36,6 +40,7 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    @Transactional(readOnly = true)
     public List<BoardDto> findAllBoards() {
         List<Board> boards = boardRepository.findAll();
         return boards.stream()
@@ -43,11 +48,13 @@ public class BoardService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public BoardDto findBoardById(Long boardId) {
         Board board = boardRepository.findById(boardId).orElse(null);
         return mapToDto(board);
     }
 
+    @Transactional
     public void deleteBoard(Long boardId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.get();
