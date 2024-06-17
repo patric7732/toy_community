@@ -6,7 +6,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 public class BoardCreateDto {
-    private String userId;
     private String title;
     private String content;
 

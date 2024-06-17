@@ -3,7 +3,6 @@ POST http://localhost:8080/boards
 Content-Type: application/json
 
 {
-  "userId": 1,
   "title": "First Board",
   "content": "This is the content of the first board."
 }
