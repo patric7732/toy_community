@@ -2,19 +2,25 @@ package org.example.toy_restboard.common.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.toy_restboard.common.security.handler.FormAuthenticationFailureHandler;
-import org.example.toy_restboard.common.security.handler.FormAuthenticationSuccessHandler;
-import org.example.toy_restboard.common.security.service.FormUserDetailsService;
+import org.example.toy_restboard.common.security.handler.AuthenticationEntryPoint;
+import org.example.toy_restboard.common.security.handler.RestAccessDeniedHandler;
+
+import org.example.toy_restboard.common.security.jwt.JwtAuthenticationFilter;
+import org.example.toy_restboard.common.security.jwt.JwtAuthorizationFilter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -26,9 +32,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig {
-    private final FormUserDetailsService userDetailsService;
-    private final FormAuthenticationFailureHandler failureHandler;
-    private final FormAuthenticationSuccessHandler successHandler;
+
 
     @Bean
     public static RoleHierarchy roleHierarchy(){
@@ -36,9 +40,24 @@ public class SecurityConfig {
                 ROLE_ADMIN > ROLE_USER
                 """);
     }
+
+    public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+            builder.addFilter(new JwtAuthenticationFilter(authenticationManager));
+            builder.addFilter(new JwtAuthorizationFilter(authenticationManager));
+            super.configure(builder);
+        }
+        public HttpSecurity build(){
+            return getBuilder();
+        }
+    }
     @Bean
     @Order(1)
     public SecurityFilterChain ApiSecurityFilterChain(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder managerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        AuthenticationManager authenticationManager = managerBuilder.build();
         http.securityMatchers(security -> security.requestMatchers("/api/**"))
                 .authorizeHttpRequests(auth -> auth.
                         requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
@@ -52,7 +71,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 
-                .cors(cors -> cors.configurationSource(configurationSource()));
+                .cors(cors -> cors.configurationSource(configurationSource()))
+                .with(new CustomSecurityFilterManager(), c -> c.build())
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(new RestAccessDeniedHandler())
+                        .authenticationEntryPoint(new AuthenticationEntryPoint()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 
 
@@ -60,24 +84,7 @@ public class SecurityConfig {
 
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.
-                        requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
-                        .requestMatchers("/", "/signup", "/logout").permitAll()
-                        .anyRequest().permitAll())
 
-                .formLogin(form -> form.
-                        loginPage("/login")
-                        .usernameParameter("loginId")
-                        .successHandler(successHandler)
-                        .failureHandler(failureHandler))
-                .userDetailsService(userDetailsService)
-                .csrf(AbstractHttpConfigurer::disable);
-
-        return http.build();
-
-    }
 
     public CorsConfigurationSource configurationSource(){
         log.debug("디버그: CorsConfigurationSource cors 설정이 SecurityFilterChain에 등록됨");

@@ -8,7 +8,7 @@ import org.example.toy_restboard.domain.entity.User;
 public class UserRespDto {
     @Getter
     @Setter
-    private static class LoginRespDto{
+    public static class LoginRespDto{
         private Long id;
         private String loginId;
         private String createAt;

@@ -6,7 +6,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.toy_restboard.common.util.CustomDateUtil;
 import org.example.toy_restboard.domain.entity.Role;
+import org.example.toy_restboard.domain.entity.User;
 
 public class UserReqDto {
 
@@ -15,6 +17,13 @@ public class UserReqDto {
     public static class LoginReqDto {
         private String loginId;
         private String password;
+        private String createdAt;
+
+        public LoginReqDto(User user) {
+            this.loginId = user.getLoginId();
+            this.password = user.getPassword();
+            this.createdAt = CustomDateUtil.toStringFormat(user.getCreatedAt());
+        }
     }
 
     @Getter
