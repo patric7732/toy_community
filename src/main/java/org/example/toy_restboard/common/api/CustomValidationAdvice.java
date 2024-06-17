@@ -1,5 +1,6 @@
 package org.example.toy_restboard.common.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @Aspect
 @Component
+@Slf4j
 public class CustomValidationAdvice {
     @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
     public void postMapping() {
@@ -29,11 +31,15 @@ public class CustomValidationAdvice {
         for (Object arg : args) {
             if (arg instanceof BindingResult) {
                 BindingResult bindingResult = (BindingResult) arg;
-                HashMap<String, String> errorMap = new HashMap<>();
-                for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                    errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+                if (bindingResult.hasErrors()) {
+                    HashMap<String, String> errorMap = new HashMap<>();
+                    for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                        errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+                    }
+                    log.info("error {}", errorMap);
+                    throw new CustomValidationException("유효성 검사 실패", errorMap);
                 }
-                throw new CustomValidationException("유효성 검사 실패", errorMap);
+
             }
         }
         return joinPoint.proceed();

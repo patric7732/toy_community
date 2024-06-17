@@ -1,6 +1,7 @@
 package org.example.toy_restboard.web.controller.user;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,9 +33,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@Validated @RequestBody JoinReqDto joinReqDto, BindingResult bindingResult) {
+    public ResponseEntity<?> join(@Valid @RequestBody JoinReqDto joinReqDto, BindingResult bindingResult) {
         JoinRespDto userRespDto = userService.join(joinReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(1,"회원 가입 성공",joinReqDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseDto<>(1,"회원 가입 성공",userRespDto), HttpStatus.CREATED);
 
     }
 }

@@ -12,6 +12,6 @@ import java.io.IOException;
 public class AuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        CustomResponseUtil.fail(response,"권한이 없습니다.", HttpStatus.UNAUTHORIZED);
+        CustomResponseUtil.fail(response,"로그인을 해주세요", HttpStatus.UNAUTHORIZED);
     }
 }

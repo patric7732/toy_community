@@ -1,29 +1,21 @@
 package org.example.toy_restboard.domain.dto.userdto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.toy_restboard.common.util.CustomDateUtil;
+import lombok.ToString;
 import org.example.toy_restboard.domain.entity.Role;
-import org.example.toy_restboard.domain.entity.User;
+import org.hibernate.validator.constraints.Range;
 
 public class UserReqDto {
 
     @Getter
     @Setter
+    @ToString
     public static class LoginReqDto {
         private String loginId;
         private String password;
-        private String createdAt;
 
-        public LoginReqDto(User user) {
-            this.loginId = user.getLoginId();
-            this.password = user.getPassword();
-            this.createdAt = CustomDateUtil.toStringFormat(user.getCreatedAt());
-        }
     }
 
     @Getter
@@ -42,10 +34,9 @@ public class UserReqDto {
         @NotEmpty
         @Email
         private String email;
-        @Pattern(regexp = "^[0-9]{6}$") // 6자리
+        @NotNull
         private Integer birth;
-        @NotEmpty
-        @Pattern(regexp = "^[a-zA-Z]*$") // 영어만 가능
+
         private Role role;
     }
 }

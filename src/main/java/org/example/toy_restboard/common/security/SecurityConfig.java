@@ -26,10 +26,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-@EnableWebSecurity
-@EnableMethodSecurity
+
 @Configuration
-@RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig {
 
@@ -54,11 +52,11 @@ public class SecurityConfig {
         }
     }
     @Bean
-    @Order(1)
     public SecurityFilterChain ApiSecurityFilterChain(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder managerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        AuthenticationManager authenticationManager = managerBuilder.build();
-        http.securityMatchers(security -> security.requestMatchers("/api/**"))
+
+
+        http
+                .securityMatcher("/api/**")
                 .authorizeHttpRequests(auth -> auth.
                         requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
                         .requestMatchers("/", "/signup", "/logout").permitAll()

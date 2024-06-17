@@ -1,6 +1,7 @@
 package org.example.toy_restboard.domain.dto.userdto;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.example.toy_restboard.domain.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
+@ToString
 public class LoginUser implements UserDetails {
     private final User user;
 
