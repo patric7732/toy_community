@@ -23,9 +23,7 @@ public class BoardService {
 
     @Transactional
     public void createBoard(BoardCreateDto boardCreateDto) {
-        User user = userRepository.findByLoginId(boardCreateDto.getUserId());
         Board board = new Board();
-        board.setUser(user);
         board.setTitle(boardCreateDto.getTitle());
         board.setContent(boardCreateDto.getContent());
         boardRepository.save(board);

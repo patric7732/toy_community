@@ -2,9 +2,6 @@ package org.example.toy_restboard.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.toy_restboard.domain.dto.userdto.UserJoinDto;
-
-import java.util.List;
 
 @Table(name = "users")
 @Entity
@@ -30,9 +27,6 @@ public class User extends BaseEntity {
     private Integer birth;
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Board> boards;
 
 
     public static User toEntity(UserJoinDto joinDto) {

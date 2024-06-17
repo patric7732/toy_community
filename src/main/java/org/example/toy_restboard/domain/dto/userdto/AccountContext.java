@@ -1,6 +1,7 @@
 package org.example.toy_restboard.domain.dto.userdto;
 
 import lombok.Getter;
+import org.example.toy_restboard.domain.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,12 +9,12 @@ import java.util.Collection;
 import java.util.List;
 @Getter
 public class AccountContext implements UserDetails {
-    private  final List<GrantedAuthority> authorities;
-    private final AccountDto accountDto;
+    private final User user;
+    private final List<GrantedAuthority> authorities;
 
-    public AccountContext(List<GrantedAuthority> authorities, AccountDto accountDto) {
+    public AccountContext(User user, List<GrantedAuthority> authorities) {
+        this.user = user;
         this.authorities = authorities;
-        this.accountDto = accountDto;
     }
 
     @Override
@@ -23,12 +24,12 @@ public class AccountContext implements UserDetails {
 
     @Override
     public String getPassword() {
-        return accountDto.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return accountDto.getLoginId();
+        return user.getPassword();
     }
 
     @Override

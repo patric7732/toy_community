@@ -1,4 +1,4 @@
-package org.example.toy_restboard.web.controller.user;
+package org.example.toy_restboard.web.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.toy_restboard.domain.entity.Role;
 import org.example.toy_restboard.service.UserService;
-import org.example.toy_restboard.domain.dto.userdto.UserJoinDto;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -48,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/signup")
-    public String signupForm(@ModelAttribute("user")UserJoinDto user){
+    public String signupForm(@ModelAttribute("user") UserJoinDto user){
         return "login/signup";
     }
 
@@ -61,6 +60,8 @@ public class UserController {
         userService.join(user);
         return "redirect:/";
     }
+
+
 
     // 예시로 위해 잠시 만들어준 홈컨트롤러
     @GetMapping("/")

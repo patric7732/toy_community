@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.toy_restboard.domain.entity.User;
 import org.example.toy_restboard.repository.UserRepository;
 import org.example.toy_restboard.domain.dto.userdto.AccountContext;
-import org.example.toy_restboard.domain.dto.userdto.AccountDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
