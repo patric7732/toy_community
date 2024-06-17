@@ -5,20 +5,21 @@ import org.example.toy_restboard.domain.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 @Getter
 public class AccountContext implements UserDetails {
     private final User user;
-    private final List<GrantedAuthority> authorities;
 
-    public AccountContext(User user, List<GrantedAuthority> authorities) {
+    public AccountContext(User user) {
         this.user = user;
-        this.authorities = authorities;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(() -> user.getRole().name());
         return authorities;
     }
 
