@@ -41,9 +41,8 @@ public class SecurityConfig {
                         .usernameParameter("loginId")
                         .successHandler(successHandler)
                         .failureHandler(failureHandler))
-                .userDetailsService(userDetailsService);
-
+                .userDetailsService(userDetailsService)
+                .csrf(csrf->csrf.disable());
         return http.build();
-
     }
 }

@@ -20,7 +20,7 @@ public class FormUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByLoginId(username);
+        User user = userRepository.findByLoginId(username).orElseThrow();
         if(user == null) {
             throw new UsernameNotFoundException("not found LoginId: " + username);
         }
