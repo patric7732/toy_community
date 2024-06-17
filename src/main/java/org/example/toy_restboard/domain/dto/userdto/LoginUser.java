@@ -1,34 +1,38 @@
 package org.example.toy_restboard.domain.dto.userdto;
 
 import lombok.Getter;
+import lombok.ToString;
+import org.example.toy_restboard.domain.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-@Getter
-public class AccountContext implements UserDetails {
-    private  final List<GrantedAuthority> authorities;
-    private final AccountDto accountDto;
 
-    public AccountContext(List<GrantedAuthority> authorities, AccountDto accountDto) {
-        this.authorities = authorities;
-        this.accountDto = accountDto;
+@Getter
+@ToString
+public class LoginUser implements UserDetails {
+    private final User user;
+
+    public LoginUser(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(() -> user.getRole().name());
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return accountDto.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return accountDto.getLoginId();
+        return user.getPassword();
     }
 
     @Override

@@ -17,7 +17,7 @@ public class Board extends BaseEntity {
     private Long boardId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false)

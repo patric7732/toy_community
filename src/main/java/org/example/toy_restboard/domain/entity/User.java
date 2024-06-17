@@ -2,9 +2,8 @@ package org.example.toy_restboard.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.toy_restboard.domain.dto.userdto.UserJoinDto;
 
-import java.util.List;
+import static org.example.toy_restboard.domain.dto.userdto.UserReqDto.*;
 
 @Table(name = "users")
 @Entity
@@ -12,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(of = {"id","loginId","password","email","name","birth","role"})
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,18 +31,20 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Board> boards;
 
-
-    public static User toEntity(UserJoinDto joinDto) {
+    public static User toEntity(JoinReqDto joinDto) {
+        Role role = joinDto.getRole();
+        if (role == null) {
+            role = Role.ROLE_USER;
+            joinDto.setRole(role); // 필요에 따라 joinDto의 Role을 설정해줍니다.
+        }
         return User.builder()
                 .loginId(joinDto.getLoginId())
                 .password(joinDto.getPassword())
                 .email(joinDto.getEmail())
                 .name(joinDto.getName())
                 .birth(joinDto.getBirth())
-                .role(joinDto.getRole())
+                .role(role)
                 .build();
     }
 }
