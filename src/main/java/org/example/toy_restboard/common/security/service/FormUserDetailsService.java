@@ -3,7 +3,7 @@ package org.example.toy_restboard.common.security.service;
 import lombok.RequiredArgsConstructor;
 import org.example.toy_restboard.domain.entity.User;
 import org.example.toy_restboard.repository.UserRepository;
-import org.example.toy_restboard.domain.dto.userdto.AccountContext;
+import org.example.toy_restboard.domain.dto.userdto.LoginUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +23,6 @@ public class FormUserDetailsService implements UserDetailsService {
         if(user == null) {
             throw new UsernameNotFoundException("not found LoginId: " + username);
         }
-        AccountDto accountDto = AccountDto.toDto(user);
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
-        return new AccountContext(authorities, accountDto);
+        return new LoginUser(user);
     }
 }

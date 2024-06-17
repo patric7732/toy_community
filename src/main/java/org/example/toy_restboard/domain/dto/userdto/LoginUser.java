@@ -7,12 +7,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+
 @Getter
-public class AccountContext implements UserDetails {
+public class LoginUser implements UserDetails {
     private final User user;
 
-    public AccountContext(User user) {
+    public LoginUser(User user) {
         this.user = user;
     }
 

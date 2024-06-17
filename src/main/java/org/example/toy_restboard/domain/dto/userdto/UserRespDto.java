@@ -10,12 +10,12 @@ public class UserRespDto {
     @Setter
     private static class LoginRespDto{
         private Long id;
-        private String username;
+        private String loginId;
         private String createAt;
 
         public LoginRespDto(User user) {
             this.id = user.getId();
-            this.username = user.getLoginId();
+            this.loginId = user.getLoginId();
             this.createAt = CustomDateUtil.toStringFormat(user.getCreatedAt());
         }
     }
@@ -24,7 +24,15 @@ public class UserRespDto {
     @Setter
     public static class JoinRespDto{
         private Long id;
-        private String username;
+        private String loingId;
         private String name;
+
+
+        public JoinRespDto(User user) {
+            this.id = user.getId();
+            this.loingId = user.getLoginId();
+            this.name = user.getName();
+
+        }
     }
 }
