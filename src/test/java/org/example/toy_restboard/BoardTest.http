@@ -1,27 +1,23 @@
-####Create board
+# 로그인 시뮬레이션 (유저 정보로 직접 로그인)
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "loginId": "1234",
+  "password": "1234"
+}
+
+#### 게시글 생성 요청
 POST http://localhost:8080/boards
 Content-Type: application/json
 
 {
-  "title": "First Board",
-  "content": "This is the content of the first board."
+"title": "New Board",
+"content": "Content of the new board"
 }
 
-#####PUT test
-PUT http://localhost:8080/boards/1
-Content-Type: application/json
-
-{
-"title": "Updated Board Title",
-"content": "This is the updated content of the board."
-}
-
-########Get all boards
+##### 생성된 게시글 확인
 GET http://localhost:8080/boards
 
-########Get board by id
-GET http://localhost:8080/boards/1
-
-########Delete board
+######게시글 삭제 요청
 DELETE http://localhost:8080/boards/1
-

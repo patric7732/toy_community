@@ -1,8 +1,10 @@
 package org.example.toy_restboard.common.security.jwt;
 
-import org.example.toy_restboard.domain.dto.userdto.LoginUser;
-import org.example.toy_restboard.domain.entity.Role;
-import org.example.toy_restboard.domain.entity.User;
+import org.example.toy_restboard.global.config.security.LoginUser;
+import org.example.toy_restboard.global.config.security.jwt.JwtProcess;
+import org.example.toy_restboard.global.config.security.jwt.JwtVO;
+import org.example.toy_restboard.domain.user.entity.Role;
+import org.example.toy_restboard.domain.user.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
