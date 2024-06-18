@@ -1,9 +1,10 @@
 package org.example.toy_restboard.common.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.toy_restboard.domain.entity.Role;
-import org.example.toy_restboard.domain.entity.User;
-import org.example.toy_restboard.repository.UserRepository;
+import org.example.toy_restboard.global.config.security.jwt.JwtVO;
+import org.example.toy_restboard.domain.user.entity.Role;
+import org.example.toy_restboard.domain.user.entity.User;
+import org.example.toy_restboard.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.example.toy_restboard.domain.dto.userdto.UserReqDto.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
